@@ -29,7 +29,8 @@ VanillaOption::VanillaOption(const VanillaOption& rhs)
 
 VanillaOption& VanillaOption::operator=(const VanillaOption& rhs)
 {
-    if (this == &rhs) {
+    if (this == &rhs)
+    {
         return *this;
     }
     copy(rhs);
