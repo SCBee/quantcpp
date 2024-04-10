@@ -16,22 +16,23 @@ public:
 public:
     VanillaOption& operator=(const VanillaOption& rhs);  // copy assignment
 
-public:
+public:  // getters
     double getK() const;
     double getr() const;
     double getT() const;
     double getS() const;
     double getsigma() const;
 
-private:
+private:  // european vanilla helpers
+    double N(const double x) const;
     double calc_call_price() const;
     double calc_put_price() const;
 
-private:
+private:  // setter helpers
     void copy(const VanillaOption& rhs);
     void init();
 
-private:
+private:  // member vars
     double K;
     double r;
     double T;

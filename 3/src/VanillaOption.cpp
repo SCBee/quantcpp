@@ -1,5 +1,6 @@
 #ifndef INCLUDE_SRC_VANILLAOPTION_CPP_
 #define INCLUDE_SRC_VANILLAOPTION_CPP_
+
 #include <cmath>
 
 #include "VanillaOption.h"
@@ -27,6 +28,8 @@ VanillaOption::VanillaOption(const VanillaOption& rhs)
     copy(rhs);
 }
 
+VanillaOption::~VanillaOption() = default;
+
 VanillaOption& VanillaOption::operator=(const VanillaOption& rhs)
 {
     if (this == &rhs)
@@ -35,6 +38,50 @@ VanillaOption& VanillaOption::operator=(const VanillaOption& rhs)
     }
     copy(rhs);
     return *this;
+}
+
+double VanillaOption::getK() const
+{
+    return K;
+}
+
+double VanillaOption::getr() const
+{
+    return r;
+}
+
+double VanillaOption::getT() const
+{
+    return T;
+}
+
+double VanillaOption::getS() const
+{
+    return S;
+}
+
+double VanillaOption::getsigma() const
+{
+    return sigma;
+}
+
+double VanillaOption::N(const double x) const
+{
+    double k     = 1.0 / (1.0 + 0.2316419 * x);
+    double k_sum = k
+        * (0.319381530
+           + k
+               * (-0.356563782
+                  + k * (1.781477937 + k * (-1.821255978 + 1.330274429 * k))));
+
+    if (x >= 0.0)
+    {
+        return (1.0 - (1.0 / (pow(2 * M_PI, 0.5))) * exp(-0.5 * x * x) * k_sum);
+    }
+    else
+    {
+        return 1.0 - N(-x);
+    }
 }
 
 double VanillaOption::calc_call_price() const
